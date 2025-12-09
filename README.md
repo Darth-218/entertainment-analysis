@@ -8,6 +8,10 @@
 
 ## Data Sources
 
+- [IMDb](https://datasets.imdbws.com/).
+- [OMDb](https://www.omdbapi.com/)
+- [TMDB](https://developer.themoviedb.org/docs/getting-started).
+
 ## Data Cleaning
 
 ## Analysis Method
