@@ -12,6 +12,17 @@
 - [OMDb](https://www.omdbapi.com/)
 - [TMDB](https://developer.themoviedb.org/docs/getting-started).
 
+### Main Data Features
+
+- Movie Title
+- Release Date
+- Budget
+- Revenue
+- IMDb Rating
+- IMDb Votes
+- Genre
+- Average Cast Popularity
+
 ## Data Cleaning
 
 ## Analysis Method
