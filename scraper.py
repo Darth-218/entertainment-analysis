@@ -35,6 +35,7 @@ class MovieScraper:
                         "sort_by": "popularity.desc",
                         "vote_count.gte": 100,
                         "page": page,
+                        "with_revenue.gte": 1
                     },
                 )
                 print(f"Discovered page {page}, year {year}")
@@ -155,5 +156,5 @@ if __name__ == "__main__":
         tmdb_key=os.getenv("TMDB_API_KEY"),
         omdb_key=os.getenv("OMDB_API_KEY"),
     )
-    scraper.scrape()
+    scraper.scrape(pages_per_year=20)
 
