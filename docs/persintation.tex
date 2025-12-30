@@ -5,6 +5,8 @@
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage{adjustbox}
+\usepackage{tabularx}  % Added for better table handling
+\usepackage{ragged2e}  % Added for text justification
 
 \title{Analysis of Factors Influencing Movie Box Office Performance}
 \author{Yahia Gaber, Ahmed AbdelMaboud, Omar Desouky, \\ Manar Maher, Nardin Ashraf, Youssef Khaled}
@@ -87,29 +89,18 @@
 \end{frame}
 
 \begin{frame}{EDA Results: Rating Comparison}
-    \begin{columns}
-        \begin{column}{0.6\textwidth}
-            \begin{block}{Audience vs Critics Ratings}
-                \begin{itemize}
-                    \item \textbf{Audience scores are consistently higher} than critics' scores
-                    \item Average gap varies by genre
-                    \item Action, War, Crime: Critics rate higher than audiences
-                    \item Documentary, TV Movie: Audiences rate higher than critics
-                \end{itemize}
-            \end{block}
-        \end{column}
-
-    \end{columns}
+    \begin{block}{Audience vs Critics Ratings}
+        \begin{itemize}
+            \item \textbf{Audience scores are consistently higher} than critics' scores
+            \item Average gap varies by genre
+            \item Action, War, Crime: Critics rate higher than audiences
+            \item Documentary, TV Movie: Audiences rate higher than critics
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \begin{frame}{EDA Results: Visual Patterns}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.75\textwidth]{sp_budget_vs_worldwide.png}
-        
-        \caption{Worldwide Revenue vs Budget (Strong Positive Correlation)}
-    \end{figure}
-    
+   
     \begin{block}{Insight}
         Higher budget movies tend to generate higher revenue, though with considerable variation.
     \end{block}
@@ -128,12 +119,7 @@
         \end{column}
         
         \begin{column}{0.4\textwidth}
-            \begin{figure}
-                \centering
-                \includegraphics[width=\textwidth]{boxp_rating_vs_revenue.png}
-                \caption{Revenue Distribution by IMDb Rating Group}
-            \end{figure}
-        \end{column}
+                    \end{column}
     \end{columns}
 \end{frame}
 
@@ -152,15 +138,6 @@
             \item Investment scale and visibility outweigh audience ratings in predicting revenue
         \end{itemize}
     \end{block}
-    
-
-\end{frame}
-\begin{frame}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.8\textwidth]{feature_importance.png}
-        \caption{Regression Coefficients Comparison}
-    \end{figure}
 \end{frame}
 \begin{frame}{Clustering Analysis: Determining Optimal Clusters}
     \begin{columns}
@@ -183,25 +160,16 @@
             \end{block}
         \end{column}
         
-        
-    \end{columns}
+           \end{columns}
 \end{frame}
-\begin{frame}
-    
-            \begin{figure}
-                \centering
-                \includegraphics[width=0.7\textwidth]{elbow_method.png}
-                \caption{Elbow Method for Optimal Cluster Count}
-            \end{figure}
 
-\end{frame}
 \begin{frame}{Clustering Results: Cluster Characteristics}
     \begin{table}
         \centering
         \caption{Characteristics of Four Movie Clusters}
-        \begin{tabular}{}
+        \begin{tabular}{p{0.25\textwidth} p{0.65\textwidth}}
             \toprule
-            Cluster Name & Key Characteristics \\
+            \textbf{Cluster Name} & \textbf{Key Characteristics} \\
             \midrule
             \textbf{Poor Quality} & 
             \begin{itemize}
@@ -261,12 +229,7 @@
 \end{frame}
 
 \begin{frame}{Clustering Results: Visualization}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.85\textwidth]{figure13_placeholder.png}
-        \caption{Four Clusters Produced Through K-means (2D Projection)}
-    \end{figure}
-    
+   
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \begin{block}{Axes Interpretation}
@@ -341,4 +304,3 @@
 \end{frame}
 
 \end{document}
-
