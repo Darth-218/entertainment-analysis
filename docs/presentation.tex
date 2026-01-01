@@ -1,0 +1,238 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usefonttheme{serif}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{adjustbox}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{array}  % Added for better column control
+\usepackage{makecell} % For line breaks in table cells
+
+\title{Analysis of Factors Influencing Movie Box Office Performance}
+\author{Yahia Gaber, Ahmed AbdelMaboud, Omar Desouky, \\ Manar Maher, Nardin Ashraf, Youssef Khaled}
+\date{}
+\institute{Data Analysis Project}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Introduction}
+    \textbf{Research Questions:}
+    \begin{enumerate}
+        \item What factors most strongly predict box office success?
+        \item Do seasonal release patterns influence financial performance?
+        \item Is there a significant difference between critics' and audience ratings across genres?
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Data Sources \& Preprocessing}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Data Collection}
+                \begin{itemize}
+                    \item Sources: TMDb + OMDb APIs
+                    \item Automated data scraping
+                    \item Includes: financial metrics, release dates, ratings, popularity, genres
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Preprocessing Steps}
+                \begin{itemize}
+                    \item Removal of records with missing critical variables
+                    \item Data type normalization
+                    \item Feature normalization
+                    \item No imputation for budget/revenue
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{EDA Results: Feature Correlations}
+    \begin{table}
+        \centering
+        \caption{Correlation with Worldwide Revenue}
+        \begin{tabular}{@{}lc@{}}
+            \toprule
+            \textbf{Feature} & \textbf{Correlation} \\
+            \midrule
+            Budget & 0.785 \\
+            Mean Cast Popularity & 0.371 \\
+            IMDb Rating & 0.244 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    \begin{block}{Key Insight}
+        Budget has the strongest positive correlation with revenue. \\
+        IMDb rating shows only a weak positive correlation.
+    \end{block}
+\end{frame}
+
+\begin{frame}{EDA Results: Seasonal Analysis}
+    \begin{table}
+        \centering
+        \caption{Average Worldwide Revenue by Release Season}
+        \begin{tabular}{@{}lc@{}}
+            \toprule
+            \textbf{Season} & \textbf{Avg. Revenue} \\
+            \midrule
+            Summer & 0.0987 \\
+            Winter & 0.0800 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    \begin{block}{Key Insight}
+        Movies released in summer generate approximately 23\% higher average revenue compared to winter releases.
+    \end{block}
+\end{frame}
+
+\begin{frame}{EDA Results: Rating Comparison}
+    \begin{block}{Audience vs Critics Ratings}
+        \textbf{Key Findings:}
+        \begin{itemize}
+            \item Audience scores are consistently higher than critics' scores
+            \item Average gap varies by genre
+            \item \textbf{Critics rate higher:} Action, War, Crime
+            \item \textbf{Audiences rate higher:} Documentary, TV Movie
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Main Analysis: Linear Regression}
+    \begin{block}{Model Specification}
+        \begin{itemize}
+            \item \textbf{Dependent variable:} Worldwide Revenue
+            \item \textbf{Predictors:} Budget, Cast Popularity, IMDb Rating (standardized)
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Key Results}
+        \begin{itemize}
+            \item Budget and popularity contribute more strongly than IMDb ratings
+            \item Model explains only part of variance → other factors matter
+            \item Investment scale and visibility outweigh audience ratings
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Clustering Analysis: Optimal Clusters}
+    \begin{block}{Methodology}
+        \begin{itemize}
+            \item Applied K-means clustering
+            \item Used Elbow Method to determine optimal clusters
+            \item Evaluated within-cluster sum of squares (WCSS)
+            \item Selected K=4 as optimal
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Elbow Method Interpretation}
+        \begin{itemize}
+            \item Sharp bend at K=4 indicates optimal number
+            \item Beyond 4 clusters, marginal improvement decreases
+            \item Balance between complexity and explanatory power
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Clustering Results: Cluster Characteristics}
+    \begin{table}
+        \centering
+        \caption{Characteristics of Four Movie Clusters}
+        \begin{tabular}{@{}p{0.2\textwidth}p{0.75\textwidth}@{}}
+            \toprule
+            \textbf{Cluster} & \textbf{Characteristics} \\
+            \midrule
+            \textbf{Poor Quality} & Low ratings, low revenue, lower budget \\
+            \midrule
+            \textbf{Audience Preferred} & High audience scores, moderate critics scores \\
+            \midrule
+            \textbf{Average} & Mid-range across all metrics, most common \\
+            \midrule
+            \textbf{High Quality} & High ratings, high revenue, higher budget \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Clustering Results: Statistics}
+    \begin{table}
+        \centering
+        \small
+        \caption{Statistical Summary of Clusters}
+        \begin{tabular}{@{}lcccc@{}}
+            \toprule
+            \textbf{Metric} & \textbf{Poor} & \textbf{Audience} & \textbf{Average} & \textbf{High} \\
+            \midrule
+            Avg. Revenue & Low & Medium & Medium & High \\
+            Avg. Budget & Low & Medium & Medium & High \\
+            IMDb Rating & <5.5 & 6.0-7.0 & 6.5-7.5 & >7.5 \\
+            \% of Movies & 15\% & 25\% & 45\% & 15\% \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    
+    \begin{block}{Insight}
+        Most movies are "Average" (45\%). High quality cluster is only 15\% but achieves best financial performance.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Clustering Analysis: Key Insights}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Insight 1}
+                Movies naturally group into four distinct categories based on quality and popularity
+            \end{block}
+            
+            \begin{block}{Insight 2}
+                "High Quality" shows alignment between critical acclaim and financial success
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Insight 3}
+                "Audience Preferred" shows disconnect between critics and audiences
+            \end{block}
+            
+            \begin{block}{Insight 4}
+                Different clusters suggest different production and marketing strategies
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Conclusions}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Key Findings}
+                \begin{enumerate}
+                    \item \textbf{Budget} strongest predictor of revenue
+                    \item Summer releases earn 23\% more
+                    \item Critics vs. Audience gaps vary by genre
+                    \item Four distinct movie types identified
+                \end{enumerate}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Implications}
+                \begin{itemize}
+                    \item Success depends more on investment than ratings
+                    \item Release timing matters
+                    \item Genre affects perception
+                    \item Cluster analysis provides strategic framework
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\end{document}
